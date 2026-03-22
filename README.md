@@ -1,114 +1,136 @@
-README.md 
-
 # 💊 Drug Toxicity Prediction using AI/ML
 
 ## 🚀 Overview
-This project aims to predict the toxicity of chemical compounds using machine learning models based on molecular descriptors and chemical structure data.
 
-Early detection of toxic compounds can significantly reduce drug development costs and improve patient safety.
+This project focuses on predicting the toxicity of chemical compounds using machine learning models trained on molecular descriptors and chemical structure data.
+
+Early identification of toxic compounds can significantly reduce drug development costs, minimize late-stage failures, and enhance patient safety.
 
 ## 🎯 Problem Statement
-Drug development often fails due to unexpected toxicity.  
-Our goal is to build a machine learning model that:
-- Predicts whether a compound is toxic or non-toxic
-- Identifies key molecular features contributing to toxicity
-- Provides an interactive interface for predictions
 
-## 🧠 Approach
+Drug discovery pipelines often fail due to unforeseen toxicity in later stages, leading to high financial and time losses.
 
-### 1. Data Collection
-- Primary Dataset: **Tox21 Dataset**
-- Optional Dataset: ZINC / ChEMBL
+This project aims to build a robust ML system that:
 
-### 2. Data Preprocessing
-- Handle missing values
-- Normalize molecular descriptors
-- Feature selection / dimensionality reduction
+* Classifies compounds as **toxic or non-toxic**
+* Identifies key molecular features influencing toxicity
+* Provides an **interactive interface** for real-time predictions
 
-### 3. Feature Engineering
-- Molecular descriptors (LogP, QED, etc.)
-- Structural fingerprints (if used)
+## 🧠 Methodology
 
-### 4. Model Development
-We will experiment with:
-- Random Forest
-- XGBoost (Primary Model)
-- Logistic Regression (Baseline)
+### 1. 📊 Data Collection
 
-### 5. Model Evaluation
-- Accuracy
-- F1 Score
-- ROC-AUC
+* Primary Dataset: **Tox21 Dataset**
+* Optional Sources: ZINC, ChEMBL
 
-### 6. Explainability
-- Feature Importance
-- SHAP analysis (optional)
+### 2. 🧹 Data Preprocessing
 
-### 7. Deployment
-- Streamlit web app
-- User inputs molecular data → predicts toxicity
+* Handling missing values
+* Normalization & scaling of molecular descriptors
+* Feature selection / dimensionality reduction
+
+### 3. 🧪 Feature Engineering
+
+* Molecular descriptors (LogP, QED, Molecular Weight, etc.)
+* Structural fingerprints (if applicable)
+
+### 4. 🤖 Model Development
+
+Models used:
+
+* Logistic Regression *(Baseline)*
+* Random Forest
+* XGBoost *(Primary Model)*
+
+### 5. 📈 Model Evaluation
+
+Evaluation metrics:
+
+* Accuracy
+* F1 Score
+* ROC-AUC
+
+### 6. 🔍 Model Explainability
+
+* Feature Importance
+* SHAP Analysis *(optional but recommended)*
+
+### 7. 🌐 Deployment
+
+* Streamlit Web App
+* User inputs molecular properties → Model predicts toxicity in real-time
 
 ## 🛠️ Tech Stack
 
-- Python
-- Pandas, NumPy
-- Scikit-learn
-- XGBoost
-- RDKit (for chemical data)
-- Streamlit (UI)
-- Matplotlib / Seaborn
+* **Programming:** Python
+* **Libraries:** Pandas, NumPy, Scikit-learn
+* **ML Models:** XGBoost, Random Forest
+* **Chemistry Tools:** RDKit
+* **Visualization:** Matplotlib, Seaborn
+* **Frontend/UI:** Streamlit
 
 ## 📂 Project Structure
 
+```
 drug-toxicity-prediction/
 │
 ├── data/                # Raw & processed datasets
 ├── notebooks/           # EDA & experiments
-├── src/                 # Core ML code
+├── src/                 # Core ML pipeline
 │   ├── preprocessing.py
 │   ├── model.py
 │   ├── evaluation.py
 │
-├── app/                 # Streamlit app
+├── app/                 # Streamlit application
 │   └── app.py
 │
 ├── requirements.txt
 └── README.md
-                                                                                                                                                                                                                 ## 📅 Development Plan
+```
 
-### 🟢 Phase 1 (Day 1)
-- Dataset collection
-- EDA (Exploratory Data Analysis)
-- Data cleaning
+## 📅 Development Timeline
 
-### 🟡 Phase 2 (Day 2)
-- Feature engineering
-- Train baseline models
+### 🟢 Phase 1 – Data Preparation
 
-### 🟠 Phase 3 (Day 3)
-- Train advanced models (XGBoost)
-- Hyperparameter tuning
+* Dataset collection
+* EDA (Exploratory Data Analysis)
+* Data cleaning
 
-### 🔵 Phase 4 (Day 4)
-- Model evaluation
-- Feature importance analysis
+### 🟡 Phase 2 – Model Building
 
-### 🟣 Phase 5 (Day 5)
-- Build Streamlit UI
-- Final integration
+* Feature engineering
+* Baseline model training
 
-## 📊 Expected Output
+### 🟠 Phase 3 – Optimization
 
-- ML model predicting toxicity
-- Feature importance insights
-- Interactive web app
-- Visualizations of molecular properties vs toxicity
+* Train advanced models (XGBoost)
+* Hyperparameter tuning
 
-## 🔥 Future Improvements
+### 🔵 Phase 4 – Evaluation
 
-- Deep learning models
-- Graph Neural Networks (GNNs)
-- Real-time drug analysis API
+* Model performance analysis
+* Feature importance insights
+
+### 🟣 Phase 5 – Deployment
+
+* Build Streamlit UI
+* End-to-end integration
+
+## 📊 Expected Outcomes
+
+* Accurate ML model for toxicity prediction
+* Insights into key molecular features
+* Interactive web application
+* Visual analytics for better interpretability
+
+## 🔥 Future Scope
+
+* Deep Learning-based models
+* Graph Neural Networks (GNNs) for molecular graphs
+* Real-time API for drug toxicity prediction
+* Integration with drug discovery pipelines
 
 ## 📌 Conclusion
-This project combines AI with pharmacology to solve a real-world problem, making drug discovery safer and more efficient.
+
+This project bridges **AI and pharmacology** to address a critical challenge in drug discovery. By enabling early toxicity prediction, it contributes to safer, faster, and more cost-effective drug development.
+
