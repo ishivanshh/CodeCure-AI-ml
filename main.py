@@ -17,11 +17,12 @@ target_cols = [
     "SR-ARE", "SR-ATAD5", "SR-HSE", "SR-MMP", "SR-p53"
 ]
 
-# Exact feature columns used in training
+# EXACT training schema:
+# 5 descriptors + accidental extra 0..4 + fingerprint 0..1023
 feature_cols = (
     ["MolWt", "LogP", "NumHDonors", "NumHAcceptors", "TPSA"] +
-    ["0", "1", "2", "3", "4"] +
-    [f"{i}.1" for i in range(1024)]
+    [str(i) for i in range(5)] +
+    [str(i) for i in range(1024)]
 )
 
 def build_input(smiles: str):
@@ -29,27 +30,26 @@ def build_input(smiles: str):
     if mol is None:
         return None
 
-    row = {col: 0 for col in feature_cols}
+    # 5 descriptors
+    descriptors = [
+        Descriptors.MolWt(mol),
+        Descriptors.MolLogP(mol),
+        Descriptors.NumHDonors(mol),
+        Descriptors.NumHAcceptors(mol),
+        Descriptors.TPSA(mol),
+    ]
 
-    # descriptors
-    row["MolWt"] = Descriptors.MolWt(mol)
-    row["LogP"] = Descriptors.MolLogP(mol)
-    row["NumHDonors"] = Descriptors.NumHDonors(mol)
-    row["NumHAcceptors"] = Descriptors.NumHAcceptors(mol)
-    row["TPSA"] = Descriptors.TPSA(mol)
+    # accidental extra columns 0..4 -> keep zero
+    accidental = [0, 0, 0, 0, 0]
 
-    # keep accidental extra columns as 0
-    for extra_col in ["0", "1", "2", "3", "4"]:
-        row[extra_col] = 0
-
-    # Morgan fingerprint
+    # Morgan fingerprint bits 0..1023
     fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius=2, nBits=1024)
-    fp_bits = list(fp)
+    fp_bits = list(map(int, list(fp)))
 
-    for i, bit in enumerate(fp_bits):
-        row[f"{i}.1"] = int(bit)
+    # exact order as training
+    values = descriptors + accidental + fp_bits
 
-    X_input = pd.DataFrame([[row[col] for col in feature_cols]], columns=feature_cols)
+    X_input = pd.DataFrame([values], columns=feature_cols)
     return X_input
 
 def predict_toxicity(smiles: str):
@@ -57,12 +57,15 @@ def predict_toxicity(smiles: str):
     if X_input is None:
         return None
 
-    X_input = scaler.transform(X_input)
-    proba = model.predict_proba(X_input)
+    # scale with same scaler used in training
+    X_scaled = scaler.transform(X_input)
+
+    # probability-based prediction
+    proba = model.predict_proba(X_scaled)
 
     prediction = []
     for i in range(len(proba)):
-        p = proba[i][0][1]
+        p = proba[i][0][1]  # toxic class probability
         prediction.append(1 if p > 0.25 else 0)
 
     return {
