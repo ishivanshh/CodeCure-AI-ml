@@ -78,3 +78,4 @@ def predict_toxicity(smiles: str):
         target_cols[i]: prediction[i]
         for i in range(len(target_cols))
     }
+
